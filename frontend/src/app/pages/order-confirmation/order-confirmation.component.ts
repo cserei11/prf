@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router"
 import type { Order } from "../../models/order.model"
 import { OrderService } from "../../services/order.service"
 import { ProductService } from "../../services/product.service"
+import { AuthService } from "../../services/auth.service"
 
 @Component({
   selector: "app-order-confirmation",
@@ -19,6 +20,7 @@ export class OrderConfirmationComponent implements OnInit {
     private router: Router,
     private orderService: OrderService,
     private productService: ProductService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +93,10 @@ export class OrderConfirmationComponent implements OnInit {
       default:
         return "bg-gray-100 text-gray-800"
     }
+  }
+
+  isCustomer(): boolean {
+    return this.authService.isCustomer()
   }
 }
 

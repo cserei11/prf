@@ -4,7 +4,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  
+
   <div *ngIf="!isLoading && order" class="max-w-3xl mx-auto">
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
       <div class="text-center mb-6">
@@ -14,7 +14,7 @@
         <h1 class="text-3xl font-bold">Order Confirmed!</h1>
         <p class="text-gray-600 mt-2">Thank you for your purchase</p>
       </div>
-      
+
       <div class="border-t border-b py-4 mb-4">
         <div class="flex justify-between mb-2">
           <span class="font-medium">Order Number:</span>
@@ -31,16 +31,16 @@
           </span>
         </div>
       </div>
-      
+
       <h2 class="text-xl font-semibold mb-4">Order Details</h2>
-      
+
       <div class="divide-y mb-6">
         <div *ngFor="let item of orderItems" class="py-3 flex">
           <div class="flex-shrink-0 mr-3">
-            <img 
-              *ngIf="item.product" 
-              [src]="item.product.imageUrl" 
-              [alt]="item.product.name" 
+            <img
+              *ngIf="item.product"
+              [src]="item.product.imageUrl"
+              [alt]="item.product.name"
               class="w-16 h-16 object-cover rounded"
             >
           </div>
@@ -51,40 +51,40 @@
           </div>
         </div>
       </div>
-      
+
       <div class="border-t pt-4 space-y-2">
         <div class="flex justify-between">
           <span>Subtotal</span>
           <span>${{ order.totalAmount.toFixed(2) }}</span>
         </div>
-        
+
         <div class="flex justify-between">
           <span>Shipping</span>
           <span>Free</span>
         </div>
-        
+
         <div class="flex justify-between font-semibold text-lg">
           <span>Total</span>
           <span>${{ order.totalAmount.toFixed(2) }}</span>
         </div>
       </div>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow-md p-6">
       <h2 class="text-xl font-semibold mb-4">Shipping Information</h2>
-      
+
       <div class="text-gray-700">
         <p>{{ order.shippingAddress.street }}</p>
         <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.postalCode }}</p>
         <p>{{ order.shippingAddress.country }}</p>
       </div>
-      
+
       <div class="mt-6 flex justify-between">
-        <a routerLink="/products" class="text-primary hover:underline">
+        <a  *ngIf="isCustomer()" routerLink="/products" class="text-primary hover:underline">
           Continue Shopping
         </a>
-        
-        <a routerLink="/orders" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark">
+
+        <a routerLink="/orders" class="bg-primary text-black px-4 py-2 rounded hover:bg-primary-dark">
           View All Orders
         </a>
       </div>

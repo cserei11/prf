@@ -36,7 +36,7 @@ export const seedDatabase = async () => {
     const customer = new User({
       username: "customer",
       email: "customer@example.com",
-      password: customerPassword,
+      password: "customerPassword",
       role: "customer",
     })
     await customer.save()
