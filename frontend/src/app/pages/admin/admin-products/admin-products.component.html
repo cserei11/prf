@@ -1,0 +1,175 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Manage Products</h1>
+    <button 
+      (click)="openCreateForm()" 
+      class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark"
+    >
+      Add New Product
+    </button>
+  </div>
+  
+  <!-- Product Form -->
+  <div *ngIf="showForm" class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4">{{ isEditing ? 'Edit' : 'Add' }} Product</h2>
+    
+    <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-red-500 text-sm mt-1">
+            Product name is required
+          </div>
+        </div>
+        
+        <div>
+          <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <input 
+            type="text" 
+            id="category" 
+            formControlName="category"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="text-red-500 text-sm mt-1">
+            Category is required
+          </div>
+        </div>
+        
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+          <input 
+            type="number" 
+            id="price" 
+            formControlName="price"
+            min="0.01"
+            step="0.01"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-red-500 text-sm mt-1">
+            Valid price is required (min: 0.01)
+          </div>
+        </div>
+        
+        <div>
+          <label for="stock" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+          <input 
+            type="number" 
+            id="stock" 
+            formControlName="stock"
+            min="0"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <div *ngIf="productForm.get('stock')?.invalid && productForm.get('stock')?.touched" class="text-red-500 text-sm mt-1">
+            Valid stock quantity is required
+          </div>
+        </div>
+        
+        <div class="col-span-2">
+          <label for="imageUrl" class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+          <input 
+            type="text" 
+            id="imageUrl" 
+            formControlName="imageUrl"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <div *ngIf="productForm.get('imageUrl')?.invalid && productForm.get('imageUrl')?.touched" class="text-red-500 text-sm mt-1">
+            Image URL is required
+          </div>
+        </div>
+        
+        <div class="col-span-2">
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <textarea 
+            id="description" 
+            formControlName="description"
+            rows="4"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          ></textarea>
+          <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="text-red-500 text-sm mt-1">
+            Description is required
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-6 flex justify-end space-x-4">
+        <button 
+          type="button"
+          (click)="cancelForm()"
+          class="px-4 py-2 border rounded hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+        <button 
+          type="submit" 
+          class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark"
+          [disabled]="isSubmitting"
+        >
+          <span *ngIf="!isSubmitting">{{ isEditing ? 'Update' : 'Create' }} Product</span>
+          <span *ngIf="isSubmitting">Processing...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Products Table -->
+  <div *ngIf="isLoading" class="text-center py-8">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  
+  <div *ngIf="!isLoading" class="bg-white rounded-lg shadow-md overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-50 border-b">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr *ngFor="let product of products">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <img [src]="product.imageUrl" [alt]="product.name" class="w-12 h-12 object-cover rounded">
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-500">{{ product.category }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${{ product.price.toFixed(2) }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{{ product.stock }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <button 
+              (click)="openEditForm(product)" 
+              class="text-primary hover:text-primary-dark mr-3"
+            >
+              Edit
+            </button>
+            <button 
+              (click)="deleteProduct(product._id)" 
+              class="text-red-600 hover:text-red-900"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

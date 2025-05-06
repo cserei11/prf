@@ -1,0 +1,81 @@
+<header class="bg-blue-600 text-white shadow-md">
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a routerLink="/" class="text-2xl font-bold tracking-wide">Mobile Store</a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-6 text-white font-medium">
+        <a routerLink="/" class="hover:text-blue-300">Home</a>
+        <a routerLink="/products" class="hover:text-blue-300">Products</a>
+        <ng-container *ngIf="isAdmin()">
+          <a routerLink="/admin/products" class="hover:text-blue-300">Manage Products</a>
+          <a routerLink="/admin/orders" class="hover:text-blue-300">Manage Orders</a>
+        </ng-container>
+      </nav>
+
+      <!-- User Actions -->
+      <div class="flex items-center space-x-4">
+        <ng-container *ngIf="isCustomer()">
+          <a routerLink="/cart" class="relative hover:text-blue-300">
+            <i class="fas fa-shopping-cart"></i>
+            <span *ngIf="cartItemCount > 0"
+                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {{ cartItemCount }}
+            </span>
+          </a>
+          <a routerLink="/orders" class="hover:text-blue-300">
+            <i class="fas fa-box"></i>
+          </a>
+        </ng-container>
+
+        <ng-container *ngIf="!(currentUser$ | async)">
+          <a routerLink="/login" class="hover:text-blue-300 font-medium">Login</a>
+          <a routerLink="/register"
+             class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-200 transition font-semibold">
+            Register
+          </a>
+        </ng-container>
+
+        <div *ngIf="currentUser$ | async as user" class="relative">
+          <button (click)="toggleMenu()" class="flex items-center space-x-2 focus:outline-none hover:text-blue-300">
+            <span>{{ user.username }}</span>
+            <i class="fas fa-chevron-down text-sm"></i>
+          </button>
+
+          <div *ngIf="isMenuOpen" class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded shadow-lg z-20">
+            <div class="py-2">
+              <button (click)="logout()" class="block w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-white focus:outline-none" (click)="toggleMenu()">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div *ngIf="isMenuOpen" class="md:hidden mt-4 pb-4">
+      <nav class="flex flex-col space-y-3 text-white font-medium">
+        <a routerLink="/" class="hover:text-blue-300">Home</a>
+        <a routerLink="/products" class="hover:text-blue-300">Products</a>
+        <ng-container *ngIf="isAdmin()">
+          <a routerLink="/admin/products" class="hover:text-blue-300">Manage Products</a>
+          <a routerLink="/admin/orders" class="hover:text-blue-300">Manage Orders</a>
+        </ng-container>
+        <ng-container *ngIf="isCustomer()">
+          <a routerLink="/cart" class="hover:text-blue-300">Cart</a>
+          <a routerLink="/orders" class="hover:text-blue-300">Orders</a>
+        </ng-container>
+        <ng-container *ngIf="!(currentUser$ | async)">
+          <a routerLink="/login" class="hover:text-blue-300">Login</a>
+          <a routerLink="/register" class="hover:text-blue-300">Register</a>
+        </ng-container>
+        <button *ngIf="currentUser$ | async" (click)="logout()" class="text-left hover:text-blue-300">Logout</button>
+      </nav>
+    </div>
+  </div>
+</header>
