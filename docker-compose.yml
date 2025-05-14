@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:8.0.9 # Vagy image: mongo:8.0.9, ha pontos verziót szeretnél rögzíteni
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      # Ez a forma a /bin/sh -c alatt futtatja a parancsot
+      test: >
+        mongosh mongodb://localhost:27017/test --eval "quit(db.adminCommand('ping').ok === 1 ? 0 : 1)" --quiet
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 45s # Ennek bőven elégnek kell lennie, mivel a logok alapján ~1s az indulás
+
+
+  node-backend:
+    build:
+      context: ./backend
+    container_name: node-backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/mobile-store
+    command: >
+      sh -c "
+        echo 'MongoDB várhatóan kész. Adatbázis seedelése...' &&
+        npm run seed &&  # Ez most a 'ts-node src/seed.ts' parancsot fogja futtatni
+        echo 'Seed szkript lefutott. Alkalmazás indítása...' &&
+        node dist/app.js # Feltételezve, hogy a fő alkalmazásod továbbra is a lefordított JS
+      "
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: angular-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - node-backend
+
+volumes:
+  mongo-data:

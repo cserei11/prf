@@ -79,8 +79,8 @@
         <p>{{ order.shippingAddress.country }}</p>
       </div>
 
-      <div class="mt-6 flex justify-between">
-        <a  *ngIf="isCustomer()" routerLink="/products" class="text-primary hover:underline">
+      <div *ngIf="isCustomer()" class="mt-6 flex justify-between">
+        <a routerLink="/products" class="text-primary hover:underline">
           Continue Shopping
         </a>
 

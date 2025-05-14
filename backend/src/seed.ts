@@ -6,7 +6,7 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/mobile-store"
+const MONGO_URI = process.env.MONGO_URL || "mongodb://localhost:27017/mobile-store"
 
 mongoose
   .connect(MONGO_URI)
