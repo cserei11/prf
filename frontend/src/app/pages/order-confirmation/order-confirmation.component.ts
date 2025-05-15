@@ -55,10 +55,8 @@ export class OrderConfirmationComponent implements OnInit {
       return
     }
 
-    // Create a copy of order items to add product details
     this.orderItems = [...this.order.items]
 
-    // Load product details for each item
     const productPromises = this.orderItems.map((item, index) => {
       return this.productService
         .getProductById(item.productId.toString())

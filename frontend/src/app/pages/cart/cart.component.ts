@@ -45,10 +45,8 @@ export class CartComponent implements OnInit {
       return
     }
 
-    // Create a copy of cart items to add product details
     this.cartItems = [...this.cart.items]
 
-    // Load product details for each item
     const productPromises = this.cartItems.map((item, index) => {
       return this.productService
         .getProductById(item.productId.toString())
@@ -79,7 +77,6 @@ export class CartComponent implements OnInit {
     }
 
     if (newQuantity > item.product.stock) {
-      // Show error message
       return
     }
 

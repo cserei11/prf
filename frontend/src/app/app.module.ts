@@ -6,14 +6,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
 
-// Interceptors
 import { AuthInterceptor } from "./interceptors/auth.interceptor"
 
-// Components
 import { HeaderComponent } from "./components/header/header.component"
 import { ProductCardComponent } from "./components/product-card/product-card.component"
 
-// Pages
 import { HomeComponent } from "./pages/home/home.component"
 import { ProductListComponent } from "./pages/product-list/product-list.component"
 import { ProductDetailComponent } from "./pages/product-detail/product-detail.component"

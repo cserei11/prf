@@ -2,21 +2,19 @@ version: '3.8'
 
 services:
   mongo:
-    image: mongo:8.0.9 # Vagy image: mongo:8.0.9, ha pontos verziót szeretnél rögzíteni
+    image: mongo:8.0.9
     container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
     healthcheck:
-      # Ez a forma a /bin/sh -c alatt futtatja a parancsot
       test: >
         mongosh mongodb://localhost:27017/test --eval "quit(db.adminCommand('ping').ok === 1 ? 0 : 1)" --quiet
       interval: 15s
       timeout: 10s
       retries: 5
-      start_period: 45s # Ennek bőven elégnek kell lennie, mivel a logok alapján ~1s az indulás
-
+      start_period: 45s
 
   node-backend:
     build:

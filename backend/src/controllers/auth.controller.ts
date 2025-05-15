@@ -16,7 +16,7 @@ export const register = async (req: Request, res: Response) => {
       username,
       email,
       password,
-      role: "customer", // Default role
+      role: "customer",
     })
 
     await user.save()

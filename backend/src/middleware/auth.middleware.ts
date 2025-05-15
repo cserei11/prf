@@ -10,8 +10,7 @@ declare global {
   }
 }
 
-//todo
-export const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
+export const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret"
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   try {

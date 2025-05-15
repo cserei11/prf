@@ -63,7 +63,6 @@ export class ProductDetailComponent implements OnInit {
       })
       .subscribe({
         next: () => {
-          // Show success message or notification
         },
         error: (error) => {
           console.error("Error adding to cart", error)

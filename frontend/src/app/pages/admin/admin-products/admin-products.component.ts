@@ -76,7 +76,6 @@ export class AdminProductsComponent implements OnInit {
 
   submitForm(): void {
     if (this.productForm.invalid) {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.productForm.controls).forEach((key) => {
         const control = this.productForm.get(key)
         control?.markAsTouched()
@@ -96,7 +95,6 @@ export class AdminProductsComponent implements OnInit {
     }
 
     if (this.isEditing && this.currentProductId) {
-      // Update existing product
       this.productService.updateProduct(this.currentProductId, productData).subscribe({
         next: () => {
           this.isSubmitting = false
@@ -109,7 +107,6 @@ export class AdminProductsComponent implements OnInit {
         },
       })
     } else {
-      // Create new product
       this.productService.createProduct(productData).subscribe({
         next: () => {
           this.isSubmitting = false

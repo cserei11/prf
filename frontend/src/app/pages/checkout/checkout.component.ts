@@ -65,10 +65,8 @@ export class CheckoutComponent implements OnInit {
       return
     }
 
-    // Create a copy of cart items to add product details
     this.cartItems = [...this.cart.items]
 
-    // Load product details for each item
     const productPromises = this.cartItems.map((item, index) => {
       return this.productService
         .getProductById(item.productId.toString())
@@ -92,7 +90,6 @@ export class CheckoutComponent implements OnInit {
 
   placeOrder(): void {
     if (this.checkoutForm.invalid) {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.checkoutForm.controls).forEach((key) => {
         const control = this.checkoutForm.get(key)
         control?.markAsTouched()
@@ -109,7 +106,6 @@ export class CheckoutComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.isSubmitting = false
-          // Navigate to order confirmation page
           this.router.navigate(["/order-confirmation", response.order._id])
         },
         error: (error) => {

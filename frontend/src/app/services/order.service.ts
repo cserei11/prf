@@ -24,7 +24,6 @@ export class OrderService {
     return this.http.get<Order>(`${this.apiUrl}/${id}`)
   }
 
-  // Admin methods
   getAllOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.apiUrl)
   }

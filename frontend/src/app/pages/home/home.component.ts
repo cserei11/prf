@@ -21,10 +21,8 @@ export class HomeComponent implements OnInit {
   loadProducts(): void {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        // Get featured products (first 4)
         this.featuredProducts = products.slice(0, 4)
 
-        // Extract unique categories
         this.categories = [...new Set(products.map((p) => p.category))]
 
         this.isLoading = false

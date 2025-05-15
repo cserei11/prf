@@ -36,7 +36,6 @@ export class ProductListComponent implements OnInit {
       next: (products) => {
         this.products = products
 
-        // Extract unique categories
         this.categories = [...new Set(products.map((p) => p.category))]
 
         this.filterProducts()
@@ -52,12 +51,10 @@ export class ProductListComponent implements OnInit {
   filterProducts(): void {
     let filtered = [...this.products]
 
-    // Filter by category
     if (this.selectedCategory) {
       filtered = filtered.filter((p) => p.category === this.selectedCategory)
     }
 
-    // Filter by search term
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase()
       filtered = filtered.filter(

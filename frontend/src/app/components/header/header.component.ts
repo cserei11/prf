@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    // Load cart if user is logged in
     if (this.authService.isLoggedIn() && this.authService.isCustomer()) {
       this.cartService.getUserCart().subscribe()
     }
