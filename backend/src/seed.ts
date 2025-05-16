@@ -23,7 +23,6 @@ export const seedDatabase = async () => {
     await User.deleteMany({})
     await Product.deleteMany({})
 
-    const adminPassword = await bcrypt.hash("admin123", 10)
     const admin = new User({
       username: "admin",
       email: "admin@example.com",
@@ -32,7 +31,6 @@ export const seedDatabase = async () => {
     })
     await admin.save()
 
-    const customerPassword = await bcrypt.hash("customer123", 10)
     const customer = new User({
       username: "customer",
       email: "customer@example.com",
@@ -48,7 +46,7 @@ export const seedDatabase = async () => {
         price: 999.99,
         stock: 50,
         category: "Smartphones",
-        imageUrl: "/images/iphone15pro.jpg",
+        imageUrl: "assets/images/iphone15pro.jpg",
       },
       {
         name: "Samsung Galaxy S23",
@@ -56,7 +54,7 @@ export const seedDatabase = async () => {
         price: 899.99,
         stock: 45,
         category: "Smartphones",
-        imageUrl: "/images/galaxys23.jpg",
+        imageUrl: "assets/images/galaxys23.jpg",
       },
       {
         name: "Google Pixel 8",
@@ -64,7 +62,7 @@ export const seedDatabase = async () => {
         price: 799.99,
         stock: 30,
         category: "Smartphones",
-        imageUrl: "/images/pixel8.jpg",
+        imageUrl: "assets/images/pixel8.jpg",
       },
       {
         name: "iPad Air",
@@ -72,7 +70,7 @@ export const seedDatabase = async () => {
         price: 599.99,
         stock: 35,
         category: "Tablets",
-        imageUrl: "/images/ipadair.jpg",
+        imageUrl: "assets/images/ipadair.jpg",
       },
       {
         name: "Samsung Galaxy Tab S9",
@@ -80,7 +78,7 @@ export const seedDatabase = async () => {
         price: 649.99,
         stock: 25,
         category: "Tablets",
-        imageUrl: "/images/galaxytabs9.jpg",
+        imageUrl: "assets/images/galaxytabs9.jpg",
       },
       {
         name: "Apple Watch Series 9",
@@ -88,7 +86,7 @@ export const seedDatabase = async () => {
         price: 399.99,
         stock: 40,
         category: "Wearables",
-        imageUrl: "/images/applewatch9.jpg",
+        imageUrl: "assets/images/applewatch9.jpg",
       },
       {
         name: "Samsung Galaxy Watch 6",
@@ -96,7 +94,7 @@ export const seedDatabase = async () => {
         price: 349.99,
         stock: 30,
         category: "Wearables",
-        imageUrl: "/images/galaxywatch6.jpg",
+        imageUrl: "assets/images/galaxywatch6.jpg",
       },
       {
         name: "AirPods Pro 2",
@@ -104,7 +102,7 @@ export const seedDatabase = async () => {
         price: 249.99,
         stock: 60,
         category: "Audio",
-        imageUrl: "/images/airpodspro2.jpg",
+        imageUrl: "assets/images/airpodspro2.jpg",
       },
     ]
 
