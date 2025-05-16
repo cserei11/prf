@@ -5,12 +5,15 @@
     </div>
   </div>
 
-  <div *ngIf="!isLoading && product" class="bg-white rounded-lg shadow-md overflow-hidden">
-    <div class="flex flex-col md:flex-row">
-      <!-- TODO Product Image -->
-      <div class="w-full md:w-1/2">
-        <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-auto object-cover">
-      </div>
+ <div *ngIf="!isLoading && product" class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="flex flex-col md:flex-row">
+    <div class="w-full md:w-1/2 flex justify-center items-center p-4">
+      <img
+        [src]="product.imageUrl"
+        [alt]="product.name"
+        class="max-h-80 w-auto object-contain rounded-lg shadow-sm"
+      >
+    </div>
 
       <div class="w-full md:w-1/2 p-6">
         <a routerLink="/products" class="text-primary hover:underline mb-4 inline-block">
